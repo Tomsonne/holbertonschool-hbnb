@@ -21,6 +21,8 @@ Ce diagramme décrit le processus lorsqu’un utilisateur crée un nouveau compt
 
 **But :** garantir un enregistrement sécurisé et cohérent tout en gérant les erreurs communes.
 
+![Diagramme](images/creation_utilisateur.png)
+
 ---
 
 ### 2️⃣ Création d’un lieu (place)
@@ -33,6 +35,8 @@ Ce diagramme montre comment un utilisateur crée une nouvelle annonce de locatio
 - Si une erreur survient (données manquantes, utilisateur inexistant, ou erreur interne), une réponse appropriée est retournée.
 
 **But :** permettre à des utilisateurs authentifiés de publier des lieux tout en gérant les erreurs d’intégrité et de droits.
+
+![Diagramme](images/place_creation.png)
 
 ---
 
@@ -47,6 +51,8 @@ Ce diagramme illustre le dépôt d’un avis par un utilisateur sur un lieu exis
 
 **But :** permettre l’évaluation des lieux tout en s’assurant de l’authenticité des données et des entités impliquées.
 
+![Diagramme](images/review_registration.png)
+
 ---
 
 ### 4️⃣ Consultation d’une liste de lieux
@@ -60,6 +66,8 @@ Ce diagramme montre comment un utilisateur récupère une liste de lieux à part
 
 **But :** offrir une recherche flexible et efficace de lieux disponibles à la location.
 
+![Diagramme](images/fetch.png)
+
 ---
 
 ## ✅ Conclusion
@@ -70,3 +78,10 @@ Ces diagrammes de séquence permettent de **clarifier l’architecture** de l’
 - La **persistance** est responsable de l’accès aux données.
 
 Cette approche facilite la **maintenance, la scalabilité et la fiabilité** du système. Ces diagrammes servent aussi de **base de référence pour les futurs développeurs** du projet.
+
+
+- **COULIBALY Beydi**  
+  [@Beydi-dev](https://github.com/Beydi-dev)
+
+- **ROUSSEAU Thomas**  
+  [@Tomsonne](https://github.com/Tomsonne)
