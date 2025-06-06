@@ -24,7 +24,7 @@ PersistenceLayer : Cette couche est en charge de l'accès aux données, via des 
 
 Ce diagramme permet d’avoir une vue d’ensemble claire de l’organisation du système, et met en évidence la séparation des responsabilités ainsi que le rôle central joué par la façade dans la coordination des échanges entre couches.
 
-![Diagramme de packages](./image/diagramme_packages.png)
+![Diagramme de packages](./images/diagramme_packages.png)
 
 ---
 
