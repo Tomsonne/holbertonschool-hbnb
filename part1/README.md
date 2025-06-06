@@ -24,7 +24,7 @@ PersistenceLayer : Cette couche est en charge de l'accès aux données, via des 
 
 Ce diagramme permet d’avoir une vue d’ensemble claire de l’organisation du système, et met en évidence la séparation des responsabilités ainsi que le rôle central joué par la façade dans la coordination des échanges entre couches.
 
-![Diagramme de packages](./part1/assets/diagramme_packages.png)
+![Diagramme de packages](./image/diagramme_packages.png)
 
 ---
 
@@ -45,7 +45,7 @@ PlaceAmenity : classe d’association modélisant la relation many-to-many entre
 Chaque entité contient un identifiant unique (uuid4) ainsi que les champs created_at et updated_at pour la traçabilité. Les relations User → Place, User → Review et Place → Review sont modélisées en composition, traduisant une dépendance forte.
 La présence de la classe PlaceAmenity permet de respecter les bonnes pratiques UML en modélisant proprement une relation multiple et potentiellement extensible.
 
-![Diagramme de classes](./part1/assets/diagramme_classes.png)
+![Diagramme de classes](./images/diagramme_classes.png)
 
 
 ## 📊 Diagrammes de séquence
