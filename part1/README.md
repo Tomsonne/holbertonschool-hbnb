@@ -9,6 +9,45 @@ Ce document constitue une documentation technique complète du projet HBnB. HBnB
 
 L’objectif principal de ce document est de servir de référence structurée pour la mise en œuvre de l’application. Il décrit l’architecture globale du système, les entités du modèle métier, ainsi que les interactions entre les différentes couches à travers des diagrammes UML et des explications associées.
 
+
+## 📊 Diagramme de package de haut niveau
+
+Cette section présente l’architecture logicielle de l’application HBnB Evolution à travers un diagramme de packages représentant les trois couches principales de l'application, selon le modèle layered architecture :
+
+PresentationLayer : Cette couche comprend les services exposés aux utilisateurs (par exemple UserService, PlaceService, etc.). Elle est responsable de la gestion des requêtes externes et communique exclusivement avec la façade.
+
+ApplicationFacade : Ce composant central implémente le façade pattern, servant d’interface unique entre la couche de présentation et la logique métier. Il permet de masquer la complexité de la couche métier tout en assurant un découplage fort.
+
+BusinessLogicLayer : Contient les entités métier (User, Place, Review, Amenity) ainsi que les règles de gestion associées. C’est ici que sont centralisées les validations et décisions fonctionnelles.
+
+PersistenceLayer : Cette couche est en charge de l'accès aux données, via des repositories (UserRepository, PlaceRepository, etc.) qui interagissent avec une base de données externe.
+
+Ce diagramme permet d’avoir une vue d’ensemble claire de l’organisation du système, et met en évidence la séparation des responsabilités ainsi que le rôle central joué par la façade dans la coordination des échanges entre couches.
+
+![Diagramme de packages](./part1/assets/diagramme_packages.png)
+
+---
+
+## 📊 Diagramme de Classe
+
+Ce diagramme de classes décrit en détail la couche métier de l’application HBnB Evolution. Il inclut les entités principales du domaine, leurs attributs, méthodes et relations :
+
+UserClass : représente les utilisateurs (administrateurs ou non). Elle inclut des méthodes classiques (CRUD), des accesseurs et des opérations liées à la gestion du mot de passe.
+
+PlaceClass : représente les logements proposés sur la plateforme. Chaque Place est créé par un User et peut recevoir des Review. Il contient également des données géographiques (latitude, longitude).
+
+ReviewClass : représente un avis déposé par un utilisateur sur un lieu. Il inclut une note (rating), un commentaire, ainsi que les références au User et au Place.
+
+AmenityClass : représente les commodités disponibles dans les logements (Wi-Fi, ascenseur, etc.).
+
+PlaceAmenity : classe d’association modélisant la relation many-to-many entre Place et Amenity. Elle permet une gestion flexible et évolutive de cette relation.
+
+Chaque entité contient un identifiant unique (uuid4) ainsi que les champs created_at et updated_at pour la traçabilité. Les relations User → Place, User → Review et Place → Review sont modélisées en composition, traduisant une dépendance forte.
+La présence de la classe PlaceAmenity permet de respecter les bonnes pratiques UML en modélisant proprement une relation multiple et potentiellement extensible.
+
+![Diagramme de classes](./part1/assets/diagramme_classes.png)
+
+
 ## 📊 Diagrammes de séquence
 
 Ce projet comprend quatre **diagrammes de séquence UML** illustrant les interactions entre les différentes couches de l'application HBnB :
