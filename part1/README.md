@@ -1,5 +1,4 @@
 ## Introduction  
-**obligatoire**  
 
 ### Objectif  
 Fournir une vue d’ensemble du projet HBnB et expliquer l’objectif et la structure de ce document technique. Cette section introduit la documentation d’architecture et de conception présentée dans les sections suivantes.
