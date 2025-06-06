@@ -1,3 +1,14 @@
+## Introduction  
+**obligatoire**  
+
+### Objectif  
+Fournir une vue d’ensemble du projet HBnB et expliquer l’objectif et la structure de ce document technique. Cette section introduit la documentation d’architecture et de conception présentée dans les sections suivantes.
+
+### Description  
+Ce document constitue une documentation technique complète du projet HBnB. HBnB est une application web permettant aux utilisateurs de publier, rechercher et évaluer des lieux de séjour, similaire à des plateformes comme Airbnb. L’application repose sur une architecture en trois couches : la couche Présentation, la couche Logique Métier, et la couche de Persistance.  
+
+L’objectif principal de ce document est de servir de référence structurée pour la mise en œuvre de l’application. Il décrit l’architecture globale du système, les entités du modèle métier, ainsi que les interactions entre les différentes couches à travers des diagrammes UML et des explications associées.
+
 ## 📊 Diagrammes de séquence
 
 Ce projet comprend quatre **diagrammes de séquence UML** illustrant les interactions entre les différentes couches de l'application HBnB :
