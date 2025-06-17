@@ -4,19 +4,19 @@ from models import BaseModel
 class Place(BaseModel):
     def __init__(self, title, description, price, latitude, longitude, owner):
         super().__init__()
-        self.title = title
-        self.description = description
-        self.price = price
-        self.latitude = latitude
-        self.longitude = longitude
-        self.owner = owner
-        self.reviews = []  # List to store related reviews
-        self.amenities = []  # List to store related amenities
+        self.__title = title
+        self.__description = description
+        self.__price = price
+        self.__latitude = latitude
+        self.__longitude = longitude
+        self.__owner = owner
+        self.__reviews = []  # List to store related reviews
+        self.__amenities = []  # List to store related amenities
 
     def add_review(self, review):
         """Add a review to the place."""
-        self.reviews.append(review)
+        self.__reviews.append(review)
 
     def add_amenity(self, amenity):
         """Add an amenity to the place."""
-        self.amenities.append(amenity)
+        self.__amenities.append(amenity)
