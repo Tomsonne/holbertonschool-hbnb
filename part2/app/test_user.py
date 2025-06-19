@@ -2,6 +2,9 @@ import pytest
 import json
 from app import create_app
 
+import uuid
+
+
 @pytest.fixture
 def client():
     app = create_app()
@@ -220,3 +223,112 @@ def test_update_amenity_invalid_name(client):
 def test_update_amenity_not_found(client):
     response = client.put('/api/v1/amenities/nonexistent-id', json={"name": "New Name"})
     assert response.status_code == 404
+
+
+#place
+# Crée un utilisateur valide pour owner_id
+@pytest.fixture
+def user_id(client):
+    unique_email = f"john.doe.{uuid.uuid4()}@example.com"
+    res = client.post('/api/v1/users/', json={
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": unique_email,
+    })
+    print("User creation response:", res.status_code, res.get_json())
+    assert res.status_code == 201
+    return res.get_json()["id"]
+
+def test_create_place_success(client, user_id):
+    payload = {
+        "title": "Cozy Apartment",
+        "description": "A nice place to stay",
+        "price": 100.0,
+        "latitude": 37.7749,
+        "longitude": -122.4194,
+        "owner_id": user_id
+    }
+
+    res = client.post("/api/v1/places/", json=payload)
+    assert res.status_code == 201
+    data = res.get_json()
+    assert data["title"] == "Cozy Apartment"
+    assert data["price"] == 100.0
+    assert data["latitude"] == 37.7749
+    assert data["longitude"] == -122.4194
+    assert data["owner_id"] == user_id
+
+
+def test_create_place_invalid_data(client):
+    res = client.post("/api/v1/places/", json={})
+    assert res.status_code == 400
+
+
+def test_get_all_places(client, user_id):
+    # Créer un place d'abord
+    client.post("/api/v1/places/", json={
+        "title": "Test Place",
+        "description": "Nice",
+        "price": 50.0,
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "owner_id": user_id
+    })
+
+    res = client.get("/api/v1/places/")
+    assert res.status_code == 200
+    data = res.get_json()
+    assert isinstance(data, list)
+    assert any("title" in p for p in data)
+
+
+def test_get_place_detail(client, user_id):
+    res = client.post("/api/v1/places/", json={
+        "title": "Test Place Detail",
+        "description": "Details here",
+        "price": 80.0,
+        "latitude": 12.34,
+        "longitude": 56.78,
+        "owner_id": user_id
+    })
+    place_id = res.get_json()["id"]
+
+    res = client.get(f"/api/v1/places/{place_id}")
+    assert res.status_code == 200
+    data = res.get_json()
+    assert data["title"] == "Test Place Detail"
+    assert "owner" in data
+    assert "amenities" in data
+
+
+def test_get_place_not_found(client):
+    res = client.get("/api/v1/places/nonexistent-id")
+    assert res.status_code == 404
+
+
+def test_update_place_success(client, user_id):
+    res = client.post("/api/v1/places/", json={
+        "title": "Old Title",
+        "description": "Old desc",
+        "price": 50.0,
+        "latitude": 0.0,
+        "longitude": 0.0,
+        "owner_id": user_id
+    })
+    place_id = res.get_json()["id"]
+
+    res = client.put(f"/api/v1/places/{place_id}", json={
+        "title": "Luxury Condo",
+        "description": "An upscale place to stay",
+        "price": 200.0
+    })
+    assert res.status_code == 200
+    data = res.get_json()
+    assert data["message"] == "Place updated successfully"
+
+
+def test_update_place_not_found(client):
+    res = client.put("/api/v1/places/nonexistent-id", json={
+        "title": "Nothing"
+    })
+    assert res.status_code == 404

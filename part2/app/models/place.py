@@ -73,7 +73,7 @@ class Place(BaseModel):
     @owner.setter
     def owner(self, value):
         if isinstance(value, User):
-            self.__owner = value.id  # stocke son id
+            self.__owner = value  # stocke son id
         elif isinstance(value, str) and value:
             self.__owner = value
         else:
@@ -87,19 +87,29 @@ class Place(BaseModel):
         """Ajouter un équipement à la liste."""
         self.amenities.append(amenity)
 
-    def to_dict(self):
-        """Retourne un dict avec les infos principales."""
-        return {
+    def to_dict(self, full=False):
+        base = {
             'id': self.id,
             'title': self.title,
             'description': self.description,
             'price': self.price,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'owner': self.owner,
-            'reviews_count': len(self.reviews),
-            'amenities_count': len(self.amenities)
+            'owner_id': self.owner.id if hasattr(self.owner, 'id') else self.owner,
         }
+        if full:
+            base['owner'] = {
+                'id': self.owner.id,
+                'first_name': self.owner.first_name,
+                'last_name': self.owner.last_name,
+                'email': self.owner.email,
+            }
+            # Ajoute cette ligne pour inclure les amenities
+            base['amenities'] = [amenity.to_dict() for amenity in self.amenities]
+        return base
+
+
+
 
 
     

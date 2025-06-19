@@ -39,6 +39,8 @@ class PlaceList(Resource):
             return place.to_dict(), 201
         except Exception as e:
             return {'error': str(e)}, 400
+        except Exception as e:
+            return {'error': 'Internal Server Error'}, 500
         
 
     @api.response(200, 'List of places retrieved successfully')
