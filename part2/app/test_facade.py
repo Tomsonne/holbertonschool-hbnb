@@ -296,7 +296,11 @@ def test_create_review_invalid_user():
 def test_get_review():
     facade = HBnBFacade()
 
-    user = facade.create_user({'email': 'user@ex.com'})
+    user = facade.create_user({
+        'email': 'user@ex.com',
+        'first_name': 'Alice',
+        'last_name': 'Doe'
+        })
     place = facade.create_place({
         'title': 'Cabane',
         'description': '',
@@ -324,7 +328,11 @@ def test_get_review():
 def test_update_review():
     facade = HBnBFacade()
 
-    user = facade.create_user({'email': 'update@ex.com'})
+    user = facade.create_user({
+        'email': 'user@ex.com',
+        'first_name': 'Alice',
+        'last_name': 'Doe'
+        })
     place = facade.create_place({
         'title': 'Appartement',
         'description': 'Propre',
@@ -349,8 +357,12 @@ def test_update_review():
 
 def test_delete_review():
     facade = HBnBFacade()
-
-    user = facade.create_user({'email': 'del@ex.com'})
+    
+    user = facade.create_user({
+        'email': 'user@ex.com',
+        'first_name': 'Alice',
+        'last_name': 'Doe'
+        })
     place = facade.create_place({
         'title': 'Villa',
         'description': 'Vue mer',
