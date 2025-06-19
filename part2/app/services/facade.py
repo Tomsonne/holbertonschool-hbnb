@@ -56,7 +56,7 @@ class HBnBFacade:
     def update_amenity(self, amenity_id, amenity_data):
         amenity = self.get_amenity(amenity_id)
         if not amenity:
-            return None  # ou lève une exception si tu préfères
+            raise KeyError("Amenity not found")
 
         self.amenity_repo.update(amenity_id, amenity_data)
         return amenity

@@ -45,7 +45,10 @@ class AmenityResource(Resource):
     def put(self, amenity_id):
         """Update user details"""
         data = api.payload
-        updated = facade.update_amenity(amenity_id, data)
-        if not updated:
-            return {'error': 'Amenity not found'}, 404
-        return updated.to_dict(), 200
+        try:
+            updated = facade.update_amenity(amenity_id, data)
+            return {"message": "Amenity updated successfully"}, 200
+        except ValueError as e:
+            return {"error": str(e)}, 400
+        except KeyError:
+            return {"error": "Amenity not found"}, 404

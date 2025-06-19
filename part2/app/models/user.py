@@ -16,17 +16,17 @@ class User(BaseModel):
     @first_name.setter
     def first_name(self, value):
         if not value or len(value) > 50:
-            raise ValueError("Prénom requis, 50 caractères max")
+            raise ValueError("Le prénom est requis et doit faire 50 caractères max")
         self.__first_name = value
 
     @property
     def last_name(self):
         return self.__last_name
-    
+
     @last_name.setter
     def last_name(self, value):
         if not value or len(value) > 50:
-            raise ValueError("Nom requis, 50 caractères max")
+            raise ValueError("Le nom est requis et doit faire 50 caractères max")
         self.__last_name = value
 
     @property

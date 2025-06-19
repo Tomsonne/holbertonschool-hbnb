@@ -5,6 +5,7 @@ from app.models.BaseModel import BaseModel
 class Amenity(BaseModel):
     def __init__(self, name):
         super().__init__()
+
         self.name = name
 
     @property
@@ -14,7 +15,7 @@ class Amenity(BaseModel):
     @name.setter
     def name(self, value):
         if not value or len(value) > 50:
-            raise ValueError("Prénom requis, 50 caractères max")
+            raise ValueError("Le nom est requis et doit faire 50 caractères max")
         self.__name = value
 
     def to_dict(self):

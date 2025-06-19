@@ -100,3 +100,6 @@ class Place(BaseModel):
             'reviews_count': len(self.reviews),
             'amenities_count': len(self.amenities)
         }
+
+
+    
