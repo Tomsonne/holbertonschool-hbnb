@@ -5,12 +5,12 @@ from app.models.user import User
 
 
 class Review(BaseModel):
-    def __init__(self, text, rating, place, user):
+    def __init__(self, text, rating, user, place):
         super().__init__()
         self.text = text
         self.rating = rating
-        self.place = place
         self.user = user
+        self.place = place
 
     @property
     def text(self):
@@ -64,9 +64,10 @@ class Review(BaseModel):
         
     def to_dict(self):
         return {
-            'id': self.id,
-            'text': self.text,
-            'rating': self.rating,
-            'place': self.place,
-            'user': self.user
+            "id": self.id,
+            "text": self.text,
+            "rating": self.rating,
+            "user_id": self.user,
+            "place_id": self.place,
         }
+

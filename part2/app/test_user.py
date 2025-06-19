@@ -152,6 +152,19 @@ def test_create_user_invalid_email(client):
     else:
         assert "id" in data  # si accepté (selon ton implémentation actuelle)
 
+    
+def test_create_user_invalid_email_format(client):
+    invalid_emails = ["plainaddress", "@missingusername.com", "missingatsign.com", "missingdomain@.com"]
+    for email in invalid_emails:
+        res = client.post('/api/v1/users/', json={
+            "first_name": "Test",
+            "last_name": "User",
+            "email": email
+        })
+        assert res.status_code == 400
+        data = res.get_json()
+        assert "error" in data or "message" in data
+
 #amenity
 
 def test_create_amenity(client):
@@ -332,3 +345,209 @@ def test_update_place_not_found(client):
         "title": "Nothing"
     })
     assert res.status_code == 404
+
+def test_create_place_invalid_title(client, user_id):
+    payload = {
+        "title": "",
+        "description": "Invalid title",
+        "price": 100.0,
+        "latitude": 20.0,
+        "longitude": 20.0,
+        "owner_id": user_id
+    }
+    res = client.post("/api/v1/places/", json=payload)
+    assert res.status_code == 400
+
+def test_create_place_negative_price(client, user_id):
+    payload = {
+        "title": "Invalid Price",
+        "description": "Negative price",
+        "price": -10,
+        "latitude": 20.0,
+        "longitude": 20.0,
+        "owner_id": user_id
+    }
+    res = client.post("/api/v1/places/", json=payload)
+    assert res.status_code == 400
+
+def test_create_place_invalid_latitude(client, user_id):
+    payload = {
+        "title": "Invalid Latitude",
+        "description": "Too high latitude",
+        "price": 50.0,
+        "latitude": 100.0,  # > 90
+        "longitude": 0.0,
+        "owner_id": user_id
+    }
+    res = client.post("/api/v1/places/", json=payload)
+    assert res.status_code == 400
+
+def test_create_place_invalid_longitude(client, user_id):
+    payload = {
+        "title": "Invalid Longitude",
+        "description": "Too low longitude",
+        "price": 50.0,
+        "latitude": 0.0,
+        "longitude": -200.0,  # < -180
+        "owner_id": user_id
+    }
+    res = client.post("/api/v1/places/", json=payload)
+    assert res.status_code == 400
+
+
+
+
+
+#Review
+def test_create_review_success(client, user_id):
+    # Créer un place pour attacher la review
+    place_res = client.post("/api/v1/places/", json={
+        "title": "Review Place",
+        "description": "Place for review",
+        "price": 100.0,
+        "latitude": 10.0,
+        "longitude": 10.0,
+        "owner_id": user_id
+    })
+    place_id = place_res.get_json()["id"]
+
+    review_payload = {
+        "text": "Great place!",
+        "rating": 5,
+        "user_id": user_id,
+        "place_id": place_id
+    }
+
+    res = client.post("/api/v1/reviews/", json=review_payload)
+    assert res.status_code == 201
+    data = res.get_json()
+    assert data["text"] == "Great place!"
+    assert data["rating"] == 5
+    assert data["user_id"] == user_id
+    assert data["place_id"] == place_id
+
+def test_create_review_missing_text(client, user_id):
+    place_res = client.post("/api/v1/places/", json={
+        "title": "Place for invalid review",
+        "description": "Place for review",
+        "price": 100.0,
+        "latitude": 10.0,
+        "longitude": 10.0,
+        "owner_id": user_id
+    })
+    place_id = place_res.get_json()["id"]
+
+    review_payload = {
+        "text": "",
+        "rating": 4,
+        "user_id": user_id,
+        "place_id": place_id
+    }
+    res = client.post("/api/v1/reviews/", json=review_payload)
+    assert res.status_code == 400
+    data = res.get_json()
+    assert "error" in data
+
+def test_create_review_invalid_user_or_place(client, user_id):
+    review_payload = {
+        "text": "Nice",
+        "rating": 3,
+        "user_id": "nonexistent-user-id",
+        "place_id": "nonexistent-place-id"
+    }
+    res = client.post("/api/v1/reviews/", json=review_payload)
+    assert res.status_code == 400 or res.status_code == 404
+    data = res.get_json()
+    assert "error" in data
+
+def test_get_review_by_id(client, user_id):
+    place_res = client.post("/api/v1/places/", json={
+        "title": "Review Place",
+        "description": "Place for review",
+        "price": 100.0,
+        "latitude": 10.0,
+        "longitude": 10.0,
+        "owner_id": user_id
+    })
+    place_id = place_res.get_json()["id"]
+
+    review_res = client.post("/api/v1/reviews/", json={
+        "text": "Lovely",
+        "rating": 4,
+        "user_id": user_id,
+        "place_id": place_id
+    })
+    review_id = review_res.get_json()["id"]
+
+    get_res = client.get(f"/api/v1/reviews/{review_id}")
+    assert get_res.status_code == 200
+    data = get_res.get_json()
+    assert data["id"] == review_id
+
+def test_get_review_not_found(client):
+    res = client.get("/api/v1/reviews/nonexistent-id")
+    assert res.status_code == 404
+
+def test_update_review_success(client, user_id):
+    place_res = client.post("/api/v1/places/", json={
+        "title": "Place for review update",
+        "description": "Place for review",
+        "price": 100.0,
+        "latitude": 10.0,
+        "longitude": 10.0,
+        "owner_id": user_id
+    })
+    place_id = place_res.get_json()["id"]
+
+    review_res = client.post("/api/v1/reviews/", json={
+        "text": "Okay",
+        "rating": 3,
+        "user_id": user_id,
+        "place_id": place_id
+    })
+    review_id = review_res.get_json()["id"]
+
+    put_res = client.put(f"/api/v1/reviews/{review_id}", json={
+        "text": "Updated review",
+        "rating": 5
+    })
+    assert put_res.status_code == 200
+    data = put_res.get_json()
+    assert data["message"] == "Review updated successfully"
+
+def test_update_review_not_found(client):
+    res = client.put("/api/v1/reviews/nonexistent-id", json={
+        "text": "Nope",
+        "rating": 1
+    })
+    assert res.status_code == 404
+
+def test_delete_review_success(client, user_id):
+    place_res = client.post("/api/v1/places/", json={
+        "title": "Place for review delete",
+        "description": "Place for review",
+        "price": 100.0,
+        "latitude": 10.0,
+        "longitude": 10.0,
+        "owner_id": user_id
+    })
+    place_id = place_res.get_json()["id"]
+
+    review_res = client.post("/api/v1/reviews/", json={
+        "text": "To be deleted",
+        "rating": 2,
+        "user_id": user_id,
+        "place_id": place_id
+    })
+    review_id = review_res.get_json()["id"]
+
+    del_res = client.delete(f"/api/v1/reviews/{review_id}")
+    assert del_res.status_code == 200
+    data = del_res.get_json()
+    assert data["message"] == "Review deleted successfully"
+
+def test_delete_review_not_found(client):
+    res = client.delete("/api/v1/reviews/nonexistent-id")
+    assert res.status_code == 404
+
+

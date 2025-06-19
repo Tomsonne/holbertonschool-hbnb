@@ -88,17 +88,20 @@ class ReviewResource(Resource):
         except Exception as e:
             return {"error": str(e)}, 400
 
-        return updated_review.to_dict(), 200
+        return {
+            "message": "Review updated successfully",
+            "review": updated_review.to_dict()
+        }, 200
 
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
     def delete(self, review_id):
-        """Delete a review"""
-        review = facade.get_review(review_id)
-        if not review:
-            return {"error": "Review not found"}, 404
-        facade.delete_review(review_id)
-        return {"message": "Review deleted successfully"}, 200
+        try:
+            facade.delete_review(review_id)
+            return {"message": "Review deleted successfully"}, 200
+        except ValueError as e:
+            return {"error": str(e)}, 404
+        
 
 @api.route('/places/<place_id>/reviews')
 class PlaceReviewList(Resource):

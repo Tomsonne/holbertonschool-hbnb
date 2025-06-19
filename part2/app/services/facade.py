@@ -6,6 +6,8 @@ from app.models.review import Review
 from app.persistence.repository import InMemoryRepository
 
 import uuid
+import re
+
 
 class HBnBFacade:
     def __init__(self):
@@ -17,8 +19,10 @@ class HBnBFacade:
 #USER
 
     def create_user(self, user_data):
+        email = user_data.get('email')
+        if email is None or not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            raise ValueError("Invalid email format")
         user = User(**user_data)
-        #try catch pour gerer email
         self.user_repo.add(user)
         return user
 
@@ -136,23 +140,23 @@ class HBnBFacade:
         return self.review_repo.get(review_id)
 
     def get_all_reviews(self):
-        return list(self.review_repo.values())
+        return self.review_repo.get_all()
 
     def update_review(self, review_id, review_data):
-        self.place_repo.update(review_id, review_data)
-        return self.place_repo.get(review_id)
+        self.review_repo.update(review_id, review_data)
+        return self.review_repo.get(review_id)
 
     def delete_review(self, review_id):
         review = self.review_repo.get(review_id)
         if review is None:
-            del self.review_repo[review_id]
-        else:
             raise ValueError("Review not found")
+        self.review_repo.delete(review_id)
+
 
     def get_reviews_by_place(self, place_id):
         if not self.get_place(place_id):
             raise ValueError("Place not found")
         return [
             r for r in self.review_repo.get_all()
-            if r.place == place_id
+            if r.place.id == place_id
         ]
