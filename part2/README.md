@@ -144,8 +144,27 @@ curl -X 'POST' \
   "error": "Le prénom est requis et doit faire 50 caractères max"
 }
 
-```
 
+
+#### ❌ Cas 2 : Champ prénom vide
+
+
+curl -X 'POST' \
+  'http://127.0.0.1:5000/api/v1/users/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "first_name": "",
+    "last_name": "Doe",
+    "email": "johna.doe@example.com"
+}'
+
+```json
+{
+  "error": "Le prénom est requis et doit faire 50 caractères max"
+}
+
+```
 
 ## 🧪 Lancement des tests
 
