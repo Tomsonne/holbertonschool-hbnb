@@ -72,13 +72,11 @@ class HBnBFacade:
         return self.place_repo.get(place_id)
 
     def create_place(self, place_data):
-        # 1. Récupérer le User à partir de owner_id
         owner_id = place_data.get("owner_id")
         owner = self.get_user(owner_id)
         if not owner:
             raise ValueError(f"Owner with ID {owner_id} not found")
 
-        # 2. Récupérer les objets Amenity à partir des IDs
         amenity_ids = place_data.get("amenities", [])
         amenities = []
         for aid in amenity_ids:
@@ -87,7 +85,6 @@ class HBnBFacade:
                 raise ValueError(f"Amenity with ID {aid} not found")
             amenities.append(amenity)
 
-        # 3. Créer la Place SANS passer amenities
         place = Place(
             title=place_data["title"],
             description=place_data.get("description", ""),
@@ -97,7 +94,6 @@ class HBnBFacade:
             owner=owner
         )
 
-        # 4. Ajouter les amenities à la main ensuite
         for amenity in amenities:
             place.add_amenity(amenity)
 
@@ -158,5 +154,5 @@ class HBnBFacade:
             raise ValueError("Place not found")
         return [
             r for r in self.review_repo.get_all()
-            if r.place.id == place_id
+            if r.place == place_id
         ]
