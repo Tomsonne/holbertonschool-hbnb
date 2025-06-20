@@ -13,8 +13,8 @@ class Place(BaseModel):
         self.latitude = latitude
         self.longitude = longitude
         self.owner = owner
-        self.reviews = []   # Liste des reviews associées
-        self.amenities = [] # Liste des équipements associés
+        self.reviews = []
+        self.amenities = []
 
     @property
     def title(self):
@@ -73,7 +73,7 @@ class Place(BaseModel):
     @owner.setter
     def owner(self, value):
         if isinstance(value, User):
-            self.__owner = value  # stocke son id
+            self.__owner = value
         elif isinstance(value, str) and value:
             self.__owner = value
         else:
@@ -104,6 +104,5 @@ class Place(BaseModel):
                 'last_name': self.owner.last_name,
                 'email': self.owner.email,
             }
-            # Ajoute cette ligne pour inclure les amenities
             base['amenities'] = [amenity.to_dict() for amenity in self.amenities]
         return base

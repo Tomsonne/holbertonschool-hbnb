@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from app.models.base_model import BaseModel
+import re
 
 class User(BaseModel):
     def __init__(self, first_name, last_name, email):
@@ -35,12 +36,12 @@ class User(BaseModel):
     
     @email.setter
     def email(self, value):
-        if (
-            not value
-            or len(value) > 255
-            or value.count('@') != 1
-            or '.' not in value.split('@')[1]
-        ):
+        if not value or len(value) > 255:
+            raise ValueError("email invalide")
+        
+        # Regex stricte : quelque chose@quelquechose.extension
+        pattern = r'^[^@]+@[^@]+\.[a-zA-Z]{2,}$'
+        if not re.match(pattern, value):
             raise ValueError("email invalide")
 
         self.__email = value
