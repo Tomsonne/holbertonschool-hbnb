@@ -549,5 +549,3 @@ def test_delete_review_success(client, user_id):
 def test_delete_review_not_found(client):
     res = client.delete("/api/v1/reviews/nonexistent-id")
     assert res.status_code == 404
-
-
