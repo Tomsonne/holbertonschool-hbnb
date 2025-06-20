@@ -57,6 +57,7 @@ hbnb/
 ├── requirements.txt
 └── README.md
 
+```
 
 
 ---
@@ -109,10 +110,46 @@ class TestUserModel(unittest.TestCase):
 
 ```
 
+
+## ✅ Validation & Tests
+
+L’API a été testée manuellement via Swagger et `cURL`, et automatiquement via `pytest`, pour s’assurer :
+
+- du respect des règles de validation sur chaque entité
+- de la cohérence des codes HTTP (`201`, `400`, etc.)
+- d’un comportement fiable face aux cas limites
+
+---
+
+### 🔍 Exemples de tests manuels (Swagger + cURL)
+
+#### ❌ Cas 1 : Email invalide (format incorrect)
+
+```bash
+curl -X 'POST' \
+  'http://127.0.0.1:5000/api/v1/users/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john.doeexample.com"
+}'
+
+
+**Réponse attendue :**
+
+```json
+{
+  "error": "Le prénom est requis et doit faire 50 caractères max"
+}
+
+```
+
+
 ## 🧪 Lancement des tests
 
-python3 -m unittest discover -s app/tests
-
+pytest app/tests
 
 ## 🤝 Travail collaboratif
 
