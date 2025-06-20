@@ -22,6 +22,7 @@ Nous avons construit les couches **Business Logic** et **Presentation** à l’a
 
 ## 🧱 Architecture
 
+```text
 hbnb/
 ├── app/
 │   ├── __init__.py
@@ -35,8 +36,8 @@ hbnb/
 │   │       └── amenities.py
 │   ├── models/
 │   │   ├── __init__.py
-│   │   ├── user.py
 │   │   ├── base_model.py
+│   │   ├── user.py
 │   │   ├── place.py
 │   │   ├── review.py
 │   │   └── amenity.py
@@ -55,8 +56,6 @@ hbnb/
 ├── config.py
 ├── requirements.txt
 └── README.md
-
-
 
 
 
