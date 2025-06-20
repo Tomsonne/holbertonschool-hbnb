@@ -164,7 +164,7 @@ curl -X 'POST' \
 
 **Réponse attendue :**
 
-
+```
 {
   "error": "Le prénom est requis et doit faire 50 caractères max"
 }
