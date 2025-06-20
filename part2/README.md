@@ -108,13 +108,12 @@ class TestUserModel(unittest.TestCase):
         user = User(first_name="Beydi", last_name="Sow", email="beydi@example.com")
         self.assertIn("Beydi", str(user))
 
----
+```
 
 ## 🧪 Lancement des tests
 
 python3 -m unittest discover -s app/tests
 
----
 
 ## 🤝 Travail collaboratif
 
