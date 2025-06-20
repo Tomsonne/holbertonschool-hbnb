@@ -135,19 +135,20 @@ curl -X 'POST' \
     "last_name": "Doe",
     "email": "john.doeexample.com"
 }'
-
+```
 
 **Réponse attendue :**
 
-```json
+```
 {
   "error": "Le prénom est requis et doit faire 50 caractères max"
 }
 
-
+```
 
 #### ❌ Cas 2 : Champ prénom vide
 
+```
 
 curl -X 'POST' \
   'http://127.0.0.1:5000/api/v1/users/' \
@@ -159,7 +160,11 @@ curl -X 'POST' \
     "email": "johna.doe@example.com"
 }'
 
-```json
+```
+
+**Réponse attendue :**
+
+
 {
   "error": "Le prénom est requis et doit faire 50 caractères max"
 }
