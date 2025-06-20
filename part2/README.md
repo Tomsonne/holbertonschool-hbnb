@@ -93,6 +93,7 @@ Quelques exemples d'endpoints :
 Voici un extrait d’un test unitaire pour l'entité `User`, situé dans `app/tests/test_user.py` :
 
 ```python
+
 import unittest
 from app.models.user import User
 
