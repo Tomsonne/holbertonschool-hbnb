@@ -1,7 +1,7 @@
 from app.models.place import Place
 from app.models.user import User
-from app.models.BaseModel import BaseModel
-from app.models.amenitie import Amenity
+from app.models.base_model import BaseModel
+from app.models.amenity import Amenity
 from app.models.review import Review
 from app.persistence.repository import InMemoryRepository
 
@@ -82,4 +82,84 @@ class HBnBFacade:
     def update_place(self, place_id, place_data):
         self.place_repo.update(place_id, place_data)
         return self.place_repo.get(place_id)
+    
 
+     # AMENITY
+    def create_amenity(self, amenity_data):
+        amenity = Amenity(**amenity_data)
+        self.amenity_repo.add(amenity)
+        return amenity
+
+    def get_amenity(self, amenity_id):
+        return self.amenity_repo.get(amenity_id)
+
+    def get_all_amenities(self):
+        return self.amenity_repo.get_all()
+
+    def update_amenity(self, amenity_id, amenity_data):
+        return self.amenity_repo.update(amenity_id, amenity_data)
+    
+    def delete_amenity(self, amenity_id):
+        amenity = self.amenity_repo.get(amenity_id)
+        if not amenity:
+            raise Exception("Amenity not found")
+        self.amenity_repo.delete(amenity_id)
+
+
+    # REVIEW
+    def create_review(self, review_data):
+        user_id = review_data.get('user_id')
+        place_id = review_data.get('place_id')
+        rating = review_data.get('rating')
+        text = review_data.get('text', '')
+
+        # Vérifier existence user et place
+        user = self.user_repo.get(user_id)
+        if not user:
+            raise ValueError("Invalid or missing user_id")
+
+        place = self.place_repo.get(place_id)
+        if not place:
+            raise ValueError("Invalid or missing place_id")
+
+        # Vérification du rating
+        if not isinstance(rating, int) or not (1 <= rating <= 5):
+            raise ValueError("Rating must be an integer between 1 and 5")
+
+        # Construire le Review avec objets User et Place
+        review = Review(user=user, place=place, text=text, rating=rating)
+        self.review_repo.add(review)
+        return review
+
+
+    def get_review(self, review_id):
+        review =  self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+        return review
+
+    def get_all_reviews(self):
+        return self.review_repo.get_all()
+
+    def get_reviews_by_place(self, place_id):
+        if not place_id:
+            raise ValueError("Missing place_id")
+    
+        all_reviews = self.review_repo.get_all()
+        filtered_reviews = [review for review in all_reviews if review.place_id == place_id]
+        return filtered_reviews
+
+
+    def update_review(self, review_id, review_data):
+        review = self.review_repo.get(review_id)
+        if not review:
+            return None
+        self.review_repo.update(review_id, review_data)
+        return review
+
+    def delete_review(self, review_id):
+        review = self.review_repo.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
+
+        self.review_repo.delete(review_id)
