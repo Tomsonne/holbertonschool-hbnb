@@ -121,7 +121,7 @@ Projet réalisé en binôme dans le cadre de la formation **Holberton School**.
 
 **Contributeurs** :
 - [@Tomsonne](https://github.com/Tomsonne)
-- [Nom ou GitHub du binôme ici]
+- [@Beydi-dev](https://github.com/Beydi-dev)
 
 ---
 
