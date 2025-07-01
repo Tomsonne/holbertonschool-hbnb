@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from app.models.BaseModel import BaseModel
+from app.models.base_model import BaseModel
+import re
 
 class User(BaseModel):
     def __init__(self, first_name, last_name, email):
@@ -41,6 +42,7 @@ class User(BaseModel):
             or value.count('@') != 1
             or '.' not in value.split('@')[1]
         ):
+
             raise ValueError("email invalide")
 
         self.__email = value
