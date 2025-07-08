@@ -3,3 +3,4 @@ flask-restx
 requests
 pytest
 flask-bcrypt
+flask-jwt-extended

@@ -1,10 +1,8 @@
-from app.persistence.repository import InMemoryRepository
+from app.persistence.repository import SQLAlchemyRepository, InMemoryRepository, Repository
 from app.models.user import User
 from app.models.amenity import Amenity
 from app.models.place import Place
 from app.models.review import Review
-from app.persistence.repository import SQLAlchemyRepository
-from app.persistence.repository import Repository
 from app import db
 
 
@@ -21,26 +19,28 @@ class HBnBFacade:
         self.user_repository.add(user)
         return user
 
-    def get_user_by_id(self, user_id):
+    def get_user(self, user_id):
         return self.user_repository.get(user_id)
 
-    def get_all_users(self):
-        return self.user_repository.get_all()
-
-    # Similarly, implement methods for other entities
-    
     def get_users(self):
         return self.user_repository.get_all()
 
-    def get_user(self, user_id):
-        return self.user_repository.get(user_id)
+    # Similarly, implement methods for other entities
 
     def get_user_by_email(self, email):
         return self.user_repository.get_by_attribute('email', email)
     
     def update_user(self, user_id, user_data):
-        self.user_repository.update(user_id, user_data)
-    
+        user = self.user_repository.get(user_id)
+        if not user:
+            raise ValueError("User not found")   
+        
+        # Si password présent, hasher
+        if 'password' in user_data and user_data['password']:
+            user.hash_password(user_data['password'])
+
+        self.user_repository.save(user)
+
     # AMENITY
     def create_amenity(self, amenity_data):
         amenity = Amenity(**amenity_data)
@@ -117,7 +117,11 @@ class HBnBFacade:
         return place.reviews
 
     def update_review(self, review_id, review_data):
+        review = self.review_repository.get(review_id)
+        if not review:
+            raise ValueError("Review not found")
         self.review_repository.update(review_id, review_data)
+
 
     def delete_review(self, review_id):
         review = self.review_repository.get(review_id)
