@@ -41,7 +41,7 @@ class PlaceList(Resource):
         if owner is None or len(owner) == 0:
             return {'error': 'Invalid input data.'}, 400
 
-        user = facade.user_repo.get_by_attribute('id', owner)
+        user = facade.user_repository.get_by_attribute('id', owner)
         if not user:
             return {'error': 'Invalid input data'}, 400
         try:

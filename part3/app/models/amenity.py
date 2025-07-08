@@ -1,28 +1,33 @@
+from app import db
 from .basemodel import BaseModel
+from sqlalchemy.orm import validates, relationship
+from app.models.place_amenity import place_amenity
+
 
 class Amenity(BaseModel):
-	def __init__(self, name):
-		super().__init__()	
-		self.name = name
+    __tablename__ = "amenities"
 
-	@property
-	def name(self):
-		return self.__name
+    name = db.Column(db.String(50), nullable=False, unique=True)
 
-	@name.setter
-	def name(self, value):
-		if not isinstance(value, str):
-			raise TypeError("Name must be a string")
-		if not value:
-			raise ValueError("Name cannot be empty")
-		super().is_max_length('Name', value, 50)
-		self.__name = value
+    places = relationship(
+        "Place",
+        secondary=place_amenity,
+        back_populates="amenities",
+        lazy="subquery"
+    )
 
-	def update(self, data):
-		return super().update(data)
-	
-	def to_dict(self):
-		return {
-			'id': self.id,
-			'name': self.name
-		}
+    @validates("name")
+    def _validate_name(self, key, value):
+        if not isinstance(value, str):
+            raise TypeError("Name must be a string")
+        if not value.strip():
+            raise ValueError("Name cannot be empty")
+        if len(value) > 50:
+            raise ValueError("Name must be 50 characters max.")
+        return value
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
