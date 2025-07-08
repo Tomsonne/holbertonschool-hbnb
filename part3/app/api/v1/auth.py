@@ -1,6 +1,7 @@
 from flask_restx import Namespace, Resource, fields
 from flask_jwt_extended import create_access_token
 from app.services import facade
+import json
 
 api = Namespace('auth', description='Authentiation operations')
 
@@ -25,6 +26,9 @@ class Login(Resource):
             return {'error': 'Invalid credentials'}, 401
         
         # Creation du token JWT avec user id et le flag is_admin
-        access_token = create_access_token(identity={'id': str(user.id), 'is_admin': user.is_admin})
+        access_token = create_access_token(identity=json.dumps({
+            'id': str(user.id),
+            'is_admin': user.is_admin
+            }))
 
         return {'access_token': access_token}, 200
