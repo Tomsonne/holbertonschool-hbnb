@@ -48,7 +48,12 @@ class PlaceList(Resource):
         data = api.payload or {}
         data['owner_id'] = owner_id
 
-        new_place = facade.create_place(data, owner_id)
+        print("\n=== PAYLOAD REÇU DANS POST /places ===")
+        print(data)
+        print("=== FIN PAYLOAD ===\n")
+
+        
+        new_place = facade.create_place(data)
         return new_place.to_dict(), 201
 
     @api.marshal_with(place_output_model, as_list=True)

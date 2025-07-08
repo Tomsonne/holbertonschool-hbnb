@@ -31,11 +31,7 @@ class HBnBFacade:
         user = self.user_repo.get(user_id)
         if not user:
             raise ValueError("User not found")
-
-        # Mettre à jour les champs
-        user.first_name = user_data['first_name']
-        user.last_name = user_data['last_name']
-        user.email = user_data['email']
+    
 
         # Si password présent, hasher
         if 'password' in user_data and user_data['password']:
