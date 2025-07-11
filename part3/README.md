@@ -20,7 +20,7 @@
 
 ```bash
 # Cloner le repo
-git clone https://github.com/<votre-repo>.git
+git clone https://github.com/Tomsonne.git
 cd holbertonschool-hbnb
 
 # Créer un venv (optionnel mais recommandé)
@@ -81,6 +81,6 @@ La couche métier est découplée de l’API Flask et de la base de données, fa
 
 ## ___👥 Auteurs___
 
-- [Ton Nom ici](https://github.com/ton-github)  
-- [Nom du binôme ici](https://github.com/binome-github)
+- Rousseau Thomas (https://github.com/Tomsonne)  
+- Coulibaly Beydi (https://github.com/Beydi-dev)
 
