@@ -1,5 +1,5 @@
 from .basemodel import BaseModel
-from app import db
+from app.extensions import db
 from sqlalchemy.orm import validates, relationship
 from .place_amenity import place_amenity
 

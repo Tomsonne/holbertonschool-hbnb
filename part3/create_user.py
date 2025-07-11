@@ -5,9 +5,9 @@ app = create_app()
 app.app_context().push()
 
 user_data = {
-    'first_name': 'beydi',
-    'last_name': 'coulibaly',
-    'email': 'beydi@example.com',
+    'first_name': 'thomas',
+    'last_name': 'thoms',
+    'email': 'thomas@example.com',
     'password': 'beydicoulibaly',
 }
 

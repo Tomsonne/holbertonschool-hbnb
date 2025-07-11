@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/mnt/c/Users/Beydi COULIBALY/.vscode/holbertonschool-hbnb/part3/venv/bin/python3" "$0" "$@"
+'''exec' "/mnt/c/Users/Beydi COULIBALY/.vscode/holbertonschool-hbnb/part3/venv/bin/python3.12" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

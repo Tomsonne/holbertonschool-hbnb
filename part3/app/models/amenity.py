@@ -1,4 +1,4 @@
-from app import db
+from app.extensions import db
 from .basemodel import BaseModel
 from sqlalchemy.orm import validates, relationship
 from app.models.place_amenity import place_amenity
