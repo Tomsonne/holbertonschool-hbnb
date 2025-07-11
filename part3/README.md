@@ -69,7 +69,7 @@ La couche métier est découplée de l’API Flask et de la base de données, fa
 
 ## ___🗃️ Entity-Relationship Diagram___
 
-![ERD](path/to/your/ER_diagram.png)
+![ERD](ER_diagram.png)
 
 - `User` ⇨ possède des `Place` et des `Review`  
 - `Place` ⇨ lié à plusieurs `Review` et `Amenity`  
