@@ -20,7 +20,7 @@
 
 ```bash
 # Cloner le repo
-git clone https://github.com/Tomsonne.git
+git clone https://github.com/Tomsonne/holbertonschool-hbnb.git
 cd holbertonschool-hbnb
 
 # Créer un venv (optionnel mais recommandé)
