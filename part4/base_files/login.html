@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/icon.png">
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" class="login-button">Login</a>
+        </nav>
+    </header>
+    <main>
+        <section class="login-form">
+            <h2>Login</h2>
+            <form id="login-form">
+
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" autocomplete="current-password" required><br><br>
+
+                <button type="submit">Login</button>
+                <p id="error-msg" style="color: red; margin-top: 10px;"></p>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 - All rights reserved.</p>
+    </footer>
+    <script src="scripts.js"></script>
+</body>
+</html>

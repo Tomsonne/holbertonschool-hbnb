@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Places</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/icon.png">
+</head>
+<body>
+    <header>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" id="login-link" class="login-button">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="filter-section">
+            <label for="price-filter">Filter by price:</label>
+            <select id="price-filter">
+                <option value="All">All</option>
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </section>
+
+        <section id="places-list" class="places-list">
+            <!-- Les cartes de lieux seront injectées dynamiquement ici -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 - All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

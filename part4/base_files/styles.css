@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #f8f8f8;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    height: 50px;
+}
+
+nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.login-button {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 10px;
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.place-card,
+.review-card {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.details-button {
+    padding: 6px 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form input,
+form textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form button {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

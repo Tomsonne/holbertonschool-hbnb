@@ -12,6 +12,9 @@ login_model = api.model('Login', {
 
 @api.route('/login')
 class Login(Resource):
+	def options(self):
+		return {}, 200
+	
 	@api.expect(login_model)
 	def post(self):
 		"""Authenticate user and return a JWT token"""
@@ -31,3 +34,5 @@ class Login(Resource):
 
 		# Step 4: Return the JWT token to the client
 		return {'access_token': access_token}, 200
+
+

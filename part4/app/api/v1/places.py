@@ -132,7 +132,7 @@ class PlaceAmenities(Resource):
             place.add_amenity(amenity)
         return {'message': 'Amenities added successfully'}, 200
 
-@api.route('/<place_id>/reviews/')
+@api.route('/<place_id>/reviews')
 class PlaceReviewList(Resource):
     @api.response(200, 'List of reviews for the place retrieved successfully')
     @api.response(404, 'Place not found')
@@ -143,3 +143,22 @@ class PlaceReviewList(Resource):
             return {'error': 'Place not found'}, 404
         return [review.to_dict() for review in place.reviews], 200
     
+    @api.expect(api.model('ReviewInput', {
+    'text': fields.String(required=True, description='Text of the review'),
+    'rating': fields.Integer(required=True, description='Rating (1-5)')
+    }))
+    @api.response(201, 'Review successfully created')
+    @api.response(400, 'Invalid input data')
+    @api.response(401, 'Unauthorized')
+    @api.doc(security='apikey')
+    @jwt_required()
+    def post(self, place_id):
+        """Create a new review for a specific place"""
+        current_user = get_jwt_identity()
+        review_data = api.payload or {}
+        review_data['place_id'] = place_id
+        try:
+            new_review = facade.create_review(review_data, current_user)
+            return new_review.to_dict(), 201
+        except Exception as e:
+            return {"error": str(e).strip("'")}, 400

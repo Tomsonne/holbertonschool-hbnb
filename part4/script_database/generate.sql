@@ -5,7 +5,9 @@ CREATE TABLE users (
     last_name VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
-    is_admin BOOLEAN DEFAULT FALSE
+    is_admin BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Table Place
